@@ -21,10 +21,12 @@ FROM calico/bpftool:v5.3-amd64 as bpftool
 FROM debian:10-slim
 LABEL maintainer="Shaun Crampton <shaun@tigera.io>"
 
+RUN mkdir -p /sbin
+COPY ipset /sbin/ipset
+RUN chmod +x /sbin/ipset
 
 # Install remaining runtime deps required for felix from the global repository
 RUN apt-get update && apt-get install -y \
-    ipset \
     iptables \
     iproute2 \
     iputils-arping \
